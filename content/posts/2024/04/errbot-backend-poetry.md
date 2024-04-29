@@ -5,7 +5,7 @@ date: 2024-04-28T22:23:30-05:00
 slug: 2d16883
 draft: false
 author: Andrew
-description: 
+description:
 keywords:
 comments: false
 weight: 0
@@ -25,16 +25,15 @@ ShowPostNavLinks: false
 ShowBreadCrumbs: false
 ShowWordCount: false
 hideFooter: false
-
 ---
 
-Errbot's documentation has [information on packaging](https://errbot.readthedocs.io/en/latest/user_guide/plugin_development/basics.html#packaging) 
-for plugins and backends using setup.py.  I'm a fan of using Poetry for my python projects, so I wanted to figure out how to make that work for my Errbot plugins and backends.
+Errbot's documentation has [information on packaging](https://errbot.readthedocs.io/en/latest/user_guide/plugin_development/basics.html#packaging)
+for plugins and backends using setup.py. I'm a fan of using Poetry for my python projects, so I wanted to figure out how to make that work for my Errbot plugins and backends.
 
 <!--more-->
 
 It ended up being more simple than I expected. Poetry has a feature to [declare plugins](https://python-poetry.org/docs/plugins/), but the docs are for
-creating a plugin for poetry itself. There is a [github issue](https://github.com/python-poetry/poetry/issues/658) about clarifying in the docs, but you 
+creating a plugin for poetry itself. There is a [github issue](https://github.com/python-poetry/poetry/issues/658) about clarifying in the docs, but you
 can use this config for making anything that uses setup.py entry_points for plugins! For errbot, this looks something like this:
 
 ```code

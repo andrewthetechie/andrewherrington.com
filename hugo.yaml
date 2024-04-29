@@ -17,7 +17,7 @@ params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   title: Andrew Herrington's Blog
   description: "Andrew Herrington's Blog"
-  keywords: [Blog, Portfolio,]
+  keywords: [Blog, Portfolio]
   author: Andrew
   # author: ["Me", "You"] # multiple authors
   images: [""]
@@ -27,7 +27,7 @@ params:
 
   ShowReadingTime: true
   ShowShareButtons: true
-  ShareButtons: 
+  ShareButtons:
     - "linkedin"
     - reddit
     - facebook
@@ -75,7 +75,6 @@ params:
     hidden: true # hide everywhere but not in structured data
     hiddenInList: true # hide on list pages and home
     hiddenInSingle: true # hide on single page
-
 
   # for search
   # https://fusejs.io/api/options.html

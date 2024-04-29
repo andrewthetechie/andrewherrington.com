@@ -1,8 +1,8 @@
 ---
-title: {{ replace .TranslationBaseName "-" " " | title }}
+title: { { replace .TranslationBaseName "-" " " | title } }
 subtitle:
-date: {{ .Date }}
-slug: {{ substr .File.UniqueID 0 7 }}
+date: { { .Date } }
+slug: { { substr .File.UniqueID 0 7 } }
 draft: true
 author: Andrew
 description:
@@ -22,7 +22,6 @@ ShowPostNavLinks: false
 ShowBreadCrumbs: false
 ShowWordCount: false
 hideFooter: false
-
 ---
 
 <!--more-->
