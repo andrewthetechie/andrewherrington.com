@@ -1,8 +1,0 @@
-[
-  {
-    "content": "Errbot\u0026rsquo;s documentation has information on packaging for plugins and backends using setup.py. I\u0026rsquo;m a fan of using Poetry for my python projects, so I wanted to figure out how to make that work for my Errbot plugins and backends.\nIt ended up being more simple than I expected. Poetry has a feature to declare plugins, but the docs are for creating a plugin for poetry itself. There is a github issue about clarifying in the docs, but you can use this config for making anything that uses setup.py entry_points for plugins! For errbot, this looks something like this:\n[tool.poetry.plugins.\u0026#34;errbot.backend_plugins\u0026#34;] {module} = \u0026#34;{python_module}:{backend class}\u0026#34; So, for my err-aprs-backend, it ends up with:\n[tool.poetry.plugins.\u0026#34;errbot.backend_plugins\u0026#34;] aprs = \u0026#34;aprs_backend:APRSBackend\u0026#34; Which matches up with my aprs.plug\n[Core] Name = APRS Module = aprs [Documentation] Description = Backend for APRS You will also need to add your plug file to your include so it is packaged. I did this with:\ninclude = [\u0026#34;*.plug\u0026#34;] The full pyproject.toml for err-aprs-backend can be found on Github.\n",
-    "permalink": "http://localhost:1313/posts/2024/04/2d16883/",
-    "summary": "\u003cp\u003eErrbot\u0026rsquo;s documentation has \u003ca href=\"https://errbot.readthedocs.io/en/latest/user_guide/plugin_development/basics.html#packaging\"\u003einformation on packaging\u003c/a\u003e\nfor plugins and backends using setup.py.  I\u0026rsquo;m a fan of using Poetry for my python projects, so I wanted to figure out how to make that work for my Errbot plugins and backends.\u003c/p\u003e",
-    "title": "Packaging Errbot Plugins with Poetry"
-  }
-]
