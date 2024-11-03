@@ -58,7 +58,7 @@ The ESPHome device config is intentionally bare bones. A text sensor is setup us
 With a way to scan barcodes, I needed a way to look them up and get a Spotify ID. I use [Discogs](https://www.discogs.com/) to organize my vinyl collection, and it offers an [API](https://www.discogs.com/developers). Combining that with the [Spotify API](https://developer.spotify.com/documentation/web-api/reference/search), I had
 access to the data I needed.
 
-After researching options to run python scripts in Home Assistant, I decided it would be worth the extra effort to run this code as an external service and then query it in Home Assistant with a [RESTful Command](https://www.home-assistant.io/integrations/rest_command/). I have some other plans for the API in the future and it gave me a good excuse to play with some FastAPI skills.
+After researching [options](https://hacs-pyscript.readthedocs.io/en/latest/) to run [python scripts](https://www.home-assistant.io/integrations/python_script/) in Home Assistant, I decided it would be worth the extra effort to run this code as an external service and then query it in Home Assistant with a [RESTful Command](https://www.home-assistant.io/integrations/rest_command/). I have some other plans for the API in the future and it gave me a good excuse to play with some FastAPI skills.
 
 [![andrewthetechie/home-barcode-api - GitHub](https://gh-card.dev/repos/andrewthetechie/home-barcode-api.svg)](https://github.com/andrewthetechie/home-barcode-api)
 
