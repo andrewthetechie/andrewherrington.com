@@ -62,10 +62,10 @@ After researching options to run python scripts in Home Assistant, I decided it 
 
 [![andrewthetechie/home-barcode-api - GitHub](https://gh-card.dev/repos/andrewthetechie/home-barcode-api.svg)](https://github.com/andrewthetechie/home-barcode-api)
 
-The API I put together includes a cache, using SQLAlchemy to offer a range of DB Backends. I deployed the API into my homelab k8s cluster and mounted a 500mb PVC to the pod for SQLite. If you'd like to
-deploy it for yourself, there is a [Docker image](https://github.com/andrewthetechie/home-barcode-api/pkgs/container/home-barcode-api) and it takes its config via env vars.
+The Discogs and Spotify APIs have fair limits for APIs, but to try to limit the amount of outbound calls, the Barcode API uses a DB as a cache. I deployed the API into my homelab k8s cluster and mounted a 500mb PVC to the pod for SQLite. If you'd like to
+deploy it for yourself, there is a [Docker image](https://github.com/andrewthetechie/home-barcode-api/pkgs/container/home-barcode-api) and it takes its config via env vars. Maybe I'll even write a proper README someday
 
-I had to do some very basic cleaning because the Discogs API returns odd results for artists. For example, Tool is returned as "Tool (2)", which the Spotify API doesn't like. I suspect there will be more bugs as I use this system with more than the 20 albums I grabbed out of the my collection.
+I had to do some very basic data cleaning because the Discogs API returns odd results for artists. For example, Tool is returned as "Tool (2)", which the Spotify API doesn't like. I suspect there will be more bugs as I use this system with more than the 20 albums I grabbed out of the my collection.
 
 ## Home Assistant
 
@@ -83,7 +83,6 @@ The automation looks for the text sensor's state to change and then submits that
 * Project Box, USB C cable, hookup wires, hot glue, solder ~$4
 
 Total ~$46
-
 
 ## What's Next?
 
