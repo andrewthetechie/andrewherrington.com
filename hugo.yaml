@@ -2,7 +2,9 @@ baseURL: https://www.andrewherrington.com/
 languageCode: en-us
 title: Andrew's Blog
 paginate: 5
-theme: PaperMod
+theme:
+  - hugo-cloak-email
+  - PaperMod
 
 enableRobotsTXT: true
 buildDrafts: false
@@ -70,6 +72,8 @@ params:
   socialIcons:
     - name: github
       url: "https://github.com/andrewthetechie"
+    - name: linkedin
+      url: "https://www.linkedin.com/in/aherrington/"
 
   cover:
     hidden: true # hide everywhere but not in structured data

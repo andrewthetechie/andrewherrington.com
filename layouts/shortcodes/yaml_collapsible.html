@@ -1,0 +1,82 @@
+{{ $filepath := .Get "file" }}
+{{ $expand_link_text := .Get "expand_link_text" | default "Expand YAML" }}
+{{ $download_link_text := .Get "download_link_text" | default "Download YAML" }}
+{{ $userUniqueId := .Get "unique_id" | default "0" }}
+{{ $thisID := printf "%s-%s-%s-%s" $filepath $expand_link_text $download_link_text $userUniqueId }}
+{{ $uniqueId := sha1 $thisID }}
+{{ $download_link := printf "/%s" $filepath }}
+
+<div id="yaml-collapsible-{{ $uniqueId }}" class="yaml-collapsible">
+  <a href="#" class="collapsible" style="text-decoration: none;" data-original-text="{{ $expand_link_text }}">
+    <span class="expand-text">{{ $expand_link_text }}</span>
+    <span class="arrow">▼</span>
+  </a>
+  <div class="content" style="display: none;">
+    {{ $fileContent := readFile (printf "static/%s" $filepath) }}
+    {{ $highlightedContent := highlight $fileContent "yaml" "linenos=inline" }}
+    <pre><code>{{ $highlightedContent | safeHTML }}</code></pre>
+    <a href="{{ $download_link }}" download>{{ $download_link_text }}</a>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const uniqueId = "{{ $uniqueId }}";
+    const collapseElement = document.getElementById("yaml-collapsible-" + uniqueId);
+
+    if (collapseElement) {
+      const collapseLink = collapseElement.querySelector('.collapsible');
+      const content = collapseElement.querySelector('.content');
+      const expandText = collapseLink.querySelector('.expand-text');
+      const originalText = collapseLink.getAttribute('data-original-text');
+
+      collapseLink.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        if (content.style.display === "none") {
+          content.style.display = "block";
+          expandText.textContent = "Collapse";
+          collapseLink.querySelector('.arrow').textContent = "▲";
+        } else {
+          content.style.display = "none";
+          expandText.textContent = originalText;
+          collapseLink.querySelector('.arrow').textContent = "▼";
+        }
+      });
+
+      content.style.display = "none";
+    }
+  });
+</script>
+
+<style>
+  .collapsible {
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+  }
+
+  .content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+  }
+
+  pre {
+    margin: 0;
+    padding: 10px;
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+
+  .arrow {
+    margin-left: 8px;
+  }
+</style>
