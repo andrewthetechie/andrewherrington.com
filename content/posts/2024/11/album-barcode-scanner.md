@@ -37,15 +37,15 @@ home's Chromecasts.
 
 ## ESPHome Hardware
 
-This project started with an idea: I wonder if I can make esphome read barcodes. Turns out, the answer is an emphatic yes. There [are](https://www.pcbway.com/project/shareproject/Barcode_scanner_made_for_ESPHome_bb9bba9a.html) a few [projects](https://community.home-assistant.io/t/gm67-bar-code-reader-module/394182) out there already, but they had one drawback - they TTL based barcode scanners they were using meant that you had to bring the item up to the scanner to scan. I wanted a handheld wireless scanner.
+This project started with an idea: I wonder if I can make esphome read barcodes. Turns out, the answer is an emphatic yes. There [are](https://www.pcbway.com/project/shareproject/Barcode_scanner_made_for_ESPHome_bb9bba9a.html) a few [projects](https://community.home-assistant.io/t/gm67-bar-code-reader-module/394182) out there already, but they had one drawback - the [UART interface barcode scanners](https://www.amazon.com/Coolwell-Recognition-Supports-Accuracy-Scanning/dp/B0C3M3H7DV) they were using meant that you had to bring the item up to the scanner to scan. I wanted a handheld wireless scanner.
 
-There are lots of handheld barcode scanners for sale, I bought an [inexpensive one from Aliexpress](https://www.aliexpress.us/item/3256806029682141.html?spm=a2g0o.order_list.order_list_main.137.77b11802IR5u9Q&gatewayAdapt=glo2usa) for around $15. It operates as a USB HID Device. When plugged into a computer, scanning a barcode will type it into a text field.
+There are lots of handheld barcode scanners for sale, I bought an [inexpensive one from Aliexpress](https://www.aliexpress.us/item/3256806029682141.html?spm=a2g0o.order_list.order_list_main.137.77b11802IR5u9Q&gatewayAdapt=glo2usa) for around $15. It operates as a [USB HID Device](https://en.wikipedia.org/wiki/USB_human_interface_device_class) - a USB Keyboard. When its USB dongle is plugged into a computer, scanning a barcode will type it into a text field. This particular scanner has a USB recharable battery and a speaker/led to indicate scanning success on the handheld unit.
 
 ![Wireless Barcode Scanner](/images/2024/11/album-barcode-scanner/barcode-scanner.png)
 
-My first attempt to make that readable by an ESP was using a [CH9350 HID module](https://www.aliexpress.us/item/3256806406901461.html?spm=a2g0o.order_list.order_list_main.142.77b11802IR5u9Q&gatewayAdapt=glo2usa). This module takes a USB device in and then outputs HID codes over TTL. I was able to get this working with an ESP32, but ran into difficulty trying to convert the HID codes into ASCII characters.  [Jann](https://github.com/joetrs) has an [example library](https://github.com/joetrs/ESP32_CH9350_KEY) that I tried to adapt, but I wasn't able to get it working.
+My first attempt to make that readable by an ESP was using a [CH9350 HID module](https://www.aliexpress.us/item/3256806406901461.html?spm=a2g0o.order_list.order_list_main.142.77b11802IR5u9Q&gatewayAdapt=glo2usa). This module takes a USB device in and then outputs HID codes over UART. I was able to get this working with an ESP32, but ran into difficulty trying to convert the HID codes into ASCII characters.  [Jann](https://github.com/joetrs) created an [example library](https://github.com/joetrs/ESP32_CH9350_KEY) that I tried to adapt, but I wasn't able to get it working inside of ESPHome. The CH9350 has some interesting capabilities, I hope I can get it working with ESPHome in the future and share a component for others to use.
 
-Thankfully, Hobbytronics had me covered with their [USB Host Controller Board](https://www.hobbytronics.co.uk/product/host-board). For £18, I had to write no code at all. Their pre-loaded firmware did exactly what I want - output the ASCII characters that my HID barcode scanner was "typing". I connected this to an ESP32 and stuck both of them in a small project box with plenty of hot glue to hold everything in place.
+Thankfully for this project, Hobbytronics had me covered with their [USB Host Controller Board](https://www.hobbytronics.co.uk/product/host-board). For £18, I had to write no code at all. Their pre-loaded firmware did exactly what I want - output the ASCII characters that my HID barcode scanner was "typing". I connected this to an ESP32's UART pins and stuck both of them in a small project box with plenty of hot glue to hold everything in place.
 
 ![Completed ESP Barcode Scanner](/images/2024/11/album-barcode-scanner/completed-esp-scanner.png)
 
@@ -74,6 +74,16 @@ After adding my barcode scanner to Home Assistant via the ESPHome integration, I
 {{< yaml_collapsible file="files/2024/11/album-barcode-scanner/homeassistant.yaml" expand_link_text="Expand HomeAssistant Automation" download_link_text="Download HA Automation" >}}
 
 The automation looks for the text sensor's state to change and then submits that to the API via a RESTful command. If the API returns a 200, it uses TTS to speak the artist and album name and then starts playing using Spotcast. If the automation gets a 404, it uses TTS to read back the error message (which usually results in a cheerful robot reading out a 12 digit number UPC-A.)
+
+## Parts list and final costs
+
+* [ESP32 WROOM-32 Development Board](https://www.aliexpress.us/item/3256806290562326.html?spm=a2g0o.order_list.order_list_main.11.1db5180221ceGR&gatewayAdapt=glo2usa) ~$4
+* [Hobbytronics USB Host Controller Board v2.4](https://www.hobbytronics.co.uk/product/host-board) ~$23
+* [USB Wireless Barcode Scanner](https://www.aliexpress.us/item/3256806029682141.html?spm=a2g0o.order_list.order_list_main.137.77b11802IR5u9Q&gatewayAdapt=glo2usa) - $15
+* Project Box, USB C cable, hookup wires, hot glue, solder ~$4
+
+Total ~$46
+
 
 ## What's Next?
 
