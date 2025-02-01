@@ -7,7 +7,7 @@ draft: false
 author: Andrew
 description:
 keywords:
-comments: false
+comments: true
 weight: 0
 tags:
   - errbot
